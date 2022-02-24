@@ -1,33 +1,33 @@
-
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors')
-const userRoutes = require('./routes/user.js');
-const postRoutes = require('./routes/post.js');
-const mysql = require('mysql');
-
-const path = require('path');
-
-
-
+import express from "express";
 const app = express();
 
-const db = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: "P@store27",
-  database: "cruddatabase"
-});
-app.use(db);
-app.use(cors());
+import Db from './db/db.js';
+import bodyParser from "body-parser";
+import path from "path";
+import cors from "cors";
+import helmet from "helmet";
+import {fileURLToPath} from 'url';
 
-app.use(bodyParser.urlencoded({ extended: true }));
+import postRoutes from './routes/post.js';
+import userRoutes from './routes/user.js';
+import commentRoutes from './routes/comment.js';
+
+Db.sync()
+.then((console.log("Connexion a la bdd")))
+.catch(error => console.log(error))
+
+app.use(cors())
+app.use(helmet())
+
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }))
 
-app.use('/images', express.static(path.join(__dirname, 'images')));
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use('/images', express.static(path.join( __dirname, 'images')));
 
-app.use('/api/user', userRoutes);
-app.use('/api/post', postRoutes);
+app.use( userRoutes );
+app.use( postRoutes );
+app.use( commentRoutes);
 
-
-module.exports = app;
+export default app 

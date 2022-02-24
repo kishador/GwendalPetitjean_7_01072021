@@ -1,9 +1,14 @@
-const express = require('express');
-const router = express.Router();
+import {Router} from 'express'
+const router = Router()
+import { signup, login, deleteUser, getUser, updateUser } from '../controllers/user.js'
 
-const userCtrl = require('../controllers/user');
+import multer from '../middleware/multer-config.js'
+import auth from '../middleware/auth.js'
 
-router.post('/signup', userCtrl.signup);
-router.post('/login', userCtrl.login);
+router.get('/user/profile', auth, getUser)
+router.post('/api/auth/signup', multer, signup)
+router.post('/api/auth/login', login)
+router.put('/user/profile', auth, multer, updateUser)
+router.delete('/user/profile', auth, multer, deleteUser)
 
-module.exports = router;
+export default router

@@ -1,35 +1,39 @@
 import sequelize from 'sequelize'
 import db from '../db/db.js'
 const {DataTypes} = sequelize
-const User = db.define('user', {
+const Post = db.define('post', {
     id : {
         type : DataTypes.INTEGER.UNSIGNED,
         primaryKey : true,
         autoIncrement : true,
         allowNull : false
     },
-    userName : {
-        type : DataTypes.INTEGER,
-        allowNull: false
+    idUSER : {
+        type : DataTypes.INTEGER.UNSIGNED,
+        allowNull : false
     },
-    email: {
+    userName: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    password: {
-        type: DataTypes.INTEGER,
+    content: {
+        type: DataTypes.STRING,
         allowNull: false
-    },
-    imageUrl: {
+    },  
+    avatar: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      imageUrl: {
         type: DataTypes.STRING,
         allowNull: true
       }
-}, {
-    timestamps: false,
-    modelName: 'users',
+},{
+    timestamps: true,
+    modelName: 'posts',
     sequelize
   })
 
-  User.sync()
+  Post.sync()
 
-export default User
+export default Post
