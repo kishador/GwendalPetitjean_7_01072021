@@ -1,5 +1,5 @@
-import sequelize from 'sequelize'
-import db from '../db/db.js'
+const sequelize = require ('sequelize')
+const db = require ('../db/db.js')
 const {DataTypes} = sequelize
 const Post = db.define('post', {
     id : {
@@ -36,4 +36,4 @@ const Post = db.define('post', {
 
   Post.sync()
 
-export default Post
+module.exports = Post

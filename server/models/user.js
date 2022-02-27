@@ -1,15 +1,15 @@
-import sequelize from 'sequelize'
-import db from '../db/db.js'
+const sequelize = require ('sequelize')
+const db = require ('../db/db.js')
 const {DataTypes} = sequelize
 const User = db.define('user', {
     id : {
-        type : DataTypes.INTEGER.UNSIGNED,
+        type : DataTypes.INTEGER,
         primaryKey : true,
         autoIncrement : true,
         allowNull : false
     },
     userName : {
-        type : DataTypes.INTEGER,
+        type : DataTypes.STRING,
         allowNull: false
     },
     email: {
@@ -17,7 +17,7 @@ const User = db.define('user', {
         allowNull: false
     },
     password: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false
     },
     imageUrl: {
@@ -25,11 +25,11 @@ const User = db.define('user', {
         allowNull: true
       }
 }, {
-    timestamps: false,
+    timestamps: true,
     modelName: 'users',
     sequelize
   })
 
   User.sync()
 
-export default User
+module.exports = User

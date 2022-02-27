@@ -1,5 +1,5 @@
-import Post from '../models/post.js'
-import fs from 'fs'
+const Post = require ('../models/post.js')
+const fs = require ('fs')
 
 const getAllPosts = async (req, res) =>{
     try {
@@ -99,4 +99,4 @@ const deletePost = async (req, res) =>{
     }
 }
 
-export { getAllPosts, getPost, createPost, updatePost, deletePost }
+module.exports = { getAllPosts, getPost, createPost, updatePost, deletePost }

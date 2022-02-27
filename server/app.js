@@ -1,16 +1,15 @@
-import express from "express";
+const express = require("express");
 const app = express();
 
-import Db from './db/db.js';
-import bodyParser from "body-parser";
-import path from "path";
-import cors from "cors";
-import helmet from "helmet";
-import {fileURLToPath} from 'url';
+const Db = require('./db/db.js');
+const path = require("path");
+const cors = require ("cors");
+const helmet = require ("helmet");
 
-import postRoutes from './routes/post.js';
-import userRoutes from './routes/user.js';
-import commentRoutes from './routes/comment.js';
+
+const postRoutes = require ('./routes/post.js');
+const userRoutes = require ('./routes/user.js');
+const commentRoutes = require ('./routes/comment.js');
 
 Db.sync()
 .then((console.log("Connexion a la bdd")))
@@ -19,15 +18,19 @@ Db.sync()
 app.use(cors())
 app.use(helmet())
 
-app.use(bodyParser.json());
-app.use(express.urlencoded({ extended: true }))
+app.use(express.json());
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-app.use('/images', express.static(path.join( __dirname, 'images')));
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    next();
+  });
+
+app.use('/images', express.static(path.join('./images')));
 
 app.use( userRoutes );
 app.use( postRoutes );
 app.use( commentRoutes);
 
-export default app 
+module.exports = app 

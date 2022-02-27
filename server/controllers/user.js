@@ -1,28 +1,27 @@
-import User from '../models/user.js'
-import Post from '../models/post.js'
-import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
-import fs from 'fs'
+const User = require ('../models/user.js')
+const Post = require ('../models/post.js')
+const bcrypt = require ('bcrypt')
+const jwt = require ('jsonwebtoken')
+const fs = require ('fs')
 
 const signup = async (req, res) =>{
     try {
-        const userObject = JSON.parse(req.body.user)
-        const hashedPassword = await bcrypt.hash(userObject.password, 8);
+
+        const hashedPassword = await bcrypt.hash(req.body.password, 8);
 
          const emailExist = await User.findOne({ where : {
-            email: userObject.email
+            email: req.body.email 
         }})
         if ( emailExist ) {
             return res.status(401).send({ error: "Adresse email deja existante !"})
         } 
 
         await User.create({
-            username: userObject.username,
-            email: userObject.email,
-            password: hashedPassword,
-            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+            ...req.body,
+            password: hashedPassword
+           /*imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`*/
         })
-        res.status(201).send({ message: 'L\'utilisateur à été créé' })
+        res.status(201).send({ message: 'user created' })
     } catch (err) {
         res.status(500).send('Something went wrong')
     }
@@ -142,4 +141,4 @@ const deleteUser = async (req, res) =>{
     }
 }
 
-export { signup, getUser, login, updateUser, deleteUser }
+module.exports = { signup, getUser, login, updateUser, deleteUser }

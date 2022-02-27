@@ -1,5 +1,5 @@
-import http from 'http';
-import app from './app.js';
+const http = require('http');
+const app = require('./app.js');
 
 const normalizePort = val => {
   const port = parseInt(val, 10);
@@ -12,7 +12,9 @@ const normalizePort = val => {
   }
   return false;
 };
-const port = normalizePort(process.env.PORT || '4000');
+const port = normalizePort(process.env.PORT || '4200', () => {
+  console.log("Server (should) started on port 4200");
+});
 app.set('port', port);
 
 const errorHandler = error => {

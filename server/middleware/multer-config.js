@@ -1,4 +1,4 @@
-import multer from 'multer'
+const multer = require ('multer')
 
 const MIME_TYPES = {
     'images/jpg': 'jpg',
@@ -20,4 +20,4 @@ const storage = multer.diskStorage({
 });
 
 const Multer = multer({ storage}).single('image');
-export default Multer
+module.exports = Multer

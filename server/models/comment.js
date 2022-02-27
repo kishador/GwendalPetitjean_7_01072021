@@ -1,5 +1,5 @@
-import sequelize from 'sequelize'
-import db from '../db/db.js'
+const sequelize = require ('sequelize')
+const db = require ('../db/db.js')
 const {DataTypes} = sequelize
 const Comment = db.define('comment', {
     id: {
@@ -36,4 +36,4 @@ const Comment = db.define('comment', {
     
     Comment.sync()
 
-    export default Comment
+    module.exports = Comment

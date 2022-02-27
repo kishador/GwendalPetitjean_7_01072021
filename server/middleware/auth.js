@@ -1,5 +1,5 @@
-import User from '../models/user.js'
-import jwt from 'jsonwebtoken'
+const User = require ('../models/user.js')
+const jwt = require ('jsonwebtoken')
 
 /* Protéger les routes sélectionnées et vérifier que l'utilisateur est authentifié avant d'autoriser l'envoi de ses requêtes */
 const auth = async (req, res, next) => {
@@ -18,4 +18,4 @@ const auth = async (req, res, next) => {
         res.status(401).send({ error: 'Please authenticate'})
     }
 }
-export default auth
+module.exports = auth
