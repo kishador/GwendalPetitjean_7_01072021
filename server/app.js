@@ -5,8 +5,9 @@ const Db = require('./db/db.js');
 const path = require("path");
 const cors = require ("cors");
 const helmet = require ("helmet");
-
-
+const {requireAuth} = require('./middleware/auth.js');
+const cookieParser = require("cookie-parser")
+const bodyParser = require('body-parser');
 const postRoutes = require ('./routes/post.js');
 const userRoutes = require ('./routes/user.js');
 const commentRoutes = require ('./routes/comment.js');
@@ -15,16 +16,21 @@ Db.sync()
 .then((console.log("Connexion a la bdd")))
 .catch(error => console.log(error))
 
-app.use(cors())
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(cookieParser())
 app.use(helmet())
 
-app.use(express.json());
+app.use(cors({
+  origin: ["http://localhost:3000"],
+  methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+  credentials: true
+}
+))
 
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-    next();
+  app.get('/jwtid', requireAuth, (req, res) => {
+
+    res.json({userId: req.userId})
   });
 
 app.use('/images', express.static(path.join('./images')));

@@ -1,13 +1,13 @@
 const {Router} = require ('express')
 const { createPost, deletePost, getAllPosts, getPost, updatePost } = require ('../controllers/post.js')
-const router = Router()
+const postRoutes = Router()
 const multer = require ('../middleware/multer-config.js')
-const auth = require ('../middleware/auth.js')
 
-router.get('/posts', getAllPosts)
-router.get('/post/:id', auth, getPost)
-router.post('/post', auth, multer, createPost)
-router.put('/post/:id', auth, multer, updatePost)
-router.delete('/post/:id', auth, multer, deletePost)
 
-module.exports = router
+postRoutes.get('/post/', getAllPosts)
+postRoutes.get('/post/:id', getPost)
+postRoutes.post('/post', multer, createPost)
+postRoutes.put('/post/:id', multer, updatePost)
+postRoutes.delete('/post/:id', multer, deletePost)
+
+module.exports = postRoutes

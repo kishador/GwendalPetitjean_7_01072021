@@ -1,10 +1,10 @@
 const {Router} = require ('express')
 const { getAllComments, createComment, deleteComment } = require ('../controllers/comment.js')
-const router = Router()
-const auth = require ('../middleware/auth.js')
+const commentRoutes = Router()
 
-router.get('/post/:id/comments', auth, getAllComments);
-router.post('/post/:id/comment', auth, createComment);
-router.delete('/post/:id/comment', auth, deleteComment);
 
-module.exports = router
+commentRoutes.get('/post/:id/comments', getAllComments);
+commentRoutes.post('/post/:id/comment', createComment);
+commentRoutes.delete('/post/:id/comment', deleteComment);
+
+module.exports = commentRoutes
