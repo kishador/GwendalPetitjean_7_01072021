@@ -3,8 +3,8 @@ const jwt = require('jsonwebtoken');
 
 
 const requireAuth = (req, res, next) => {
-  
-    const token = req.headers["x-access-token"]
+  console.log(req.headers.authorization)
+    const token = req.headers.authorization
     if (!token) {
       res.send("need token")
     }
@@ -14,10 +14,10 @@ const requireAuth = (req, res, next) => {
         res.json({ auth: false, message: "failed to auth" })
       }
       else {
-        req.userId = decoded.id
-        next()
+        req.userId = decoded.id  
       }
     })
+    next()
   }}
    
 

@@ -44,7 +44,7 @@ const login = async (req, res, next) =>{
 
            const token = jwt.sign({id}, "jwtSecret",{
                expiresIn: maxAge,
-           })      
+           })
                res.status(200).json({ user: user.id, userToken: token})
             }
             else {
