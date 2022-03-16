@@ -20,7 +20,6 @@ const signup = async (req, res) =>{
         await User.create({
             ...req.body,
             password: hashedPassword
-           /*imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`*/
         })
         res.status(201).send({ user: User.id })
         
@@ -29,7 +28,7 @@ const signup = async (req, res) =>{
     }
 }
 const login = async (req, res, next) =>{
-    
+    console.log(req.body)
     try {
 
         const user = await User.findOne({ where: {
@@ -82,7 +81,7 @@ const getAllUsers = async (req, res) => {
   };
 
 const updateUser = async (req, res) =>{
-console.log(req.file)
+console.log(req.body)
    /* try {
         if (req.file) {
             const user = await User.findOne({ where: {

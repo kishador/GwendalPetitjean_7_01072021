@@ -23,18 +23,11 @@ const getPost = async (req, res) =>{
     }
 }
 const createPost = async (req, res) =>{
-    try {
-        const postObject = req.file ? {
-            ...JSON.parse(req.body.post),
-            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-        } : { ...JSON.parse(req.body.post)}
+    try { console.log(req.body.posterId)
             await Post.create({ 
-                ...postObject,
-                username: req.user.username,
-                avatar: req.user.imageUrl,
-                userId: req.user.id
+                ...req.body,
              })
-            
+ 
         res.status(201).send({ message: 'Post has been created'})
     } catch (err) {
         res.status(500).send(err)

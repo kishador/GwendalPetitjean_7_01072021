@@ -8,23 +8,15 @@ const Post = db.define('post', {
         autoIncrement : true,
         allowNull : false
     },
-    idUSER : {
-        type : DataTypes.INTEGER.UNSIGNED,
+    posterId : {
+        type : DataTypes.INTEGER,
         allowNull : false
     },
-    userName: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    content: {
+    message: {
         type: DataTypes.STRING,
         allowNull: false
     },  
-    avatar: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      imageUrl: {
+      picture: {
         type: DataTypes.STRING,
         allowNull: true
       }
