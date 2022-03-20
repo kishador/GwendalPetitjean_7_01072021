@@ -7,7 +7,7 @@ const SignUpForm = () => {
   const [pseudo, setPseudo] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+ 
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -15,7 +15,8 @@ const SignUpForm = () => {
     const pseudoError = document.querySelector(".pseudo.error");
     const emailError = document.querySelector(".email.error");
     const passwordError = document.querySelector(".password.error");
- 
+
+    
 
       await axios({
         method: "post",

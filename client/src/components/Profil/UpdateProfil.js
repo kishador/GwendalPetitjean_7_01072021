@@ -24,6 +24,7 @@ const UpdateProfil = () => {
           <p>{error.format}</p>
         </div>
         <div className="right-part">
+          <h4>E-mail : {userData.email}</h4>
           <h4>Membre depuis le : {dateParser(userData.createdAt)}</h4>
           <div className="button-container">
         <DeleteProfil />

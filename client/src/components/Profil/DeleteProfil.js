@@ -8,6 +8,8 @@ const DeleteProfil = () => {
   const deleteQuote = () => dispatch(deleteProfil(userData));
 
   return (
+    <div>
+      <h4>Supprimer mon compte:</h4>
     <div
       onClick={() => {
         if (window.confirm("Voulez-vous supprimer votre compte ?")) {
@@ -16,6 +18,7 @@ const DeleteProfil = () => {
       }}
     >
       <img src="./img/icons/delete.svg" alt="delete" />
+    </div>
     </div>
   );
 };
