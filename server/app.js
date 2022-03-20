@@ -1,42 +1,43 @@
-const express = require("express");
-const app = express();
-
-const Db = require('./db/db.js');
-const path = require("path");
-const cors = require ("cors");
-const helmet = require ("helmet");
-const {requireAuth} = require('./middleware/auth.js');
-const cookieParser = require("cookie-parser")
+const express = require('express');
+const helmet = require('helmet');
 const bodyParser = require('body-parser');
-const postRoutes = require ('./routes/post.js');
-const userRoutes = require ('./routes/user.js');
-const commentRoutes = require ('./routes/comment.js');
+const app = express();
+const usersRoutes = require('./routes/users');
+const postsRoutes = require('./routes/posts');
+const commentsRoutes = require('./routes/comments');
+const requireAuth  = require('./middleware/requireAuth.js')
+const path = require('path');
+const cors = require('cors');
 
-Db.sync()
-.then((console.log("Connexion a la bdd")))
-.catch(error => console.log(error))
+if (process.env.NODE_ENV !== 'production') {
+	require('dotenv').config();
+}
+
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true,
+  'allowedHeaders': ['sessionId', 'Content-Type', 'authorization'],
+  'exposedHeaders': ['sessionId'],
+  'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  'preflightContinue': false
+}
+app.use(cors(corsOptions));
+app.get('/jwtid', requireAuth, (req, res) => {
+	console.log(res.data)
+  });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(cookieParser())
-app.use(helmet())
 
-app.use(cors({
-  origin: ["http://localhost:3000"],
-  methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
-  credentials: true
-}
-))
+app.use(helmet());
 
-  app.get('/jwtid', requireAuth, (req, res) => {
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
-    res.json({userId: req.userId})
-  });
+const db = require("./models");
+db.sequelize.sync();
 
-app.use('/images', express.static(path.join('./images')));
+app.use('/api/users', usersRoutes);
+app.use('/api/posts', postsRoutes);
+app.use('/api/comments', commentsRoutes);
 
-app.use( userRoutes );
-app.use( postRoutes );
-app.use( commentRoutes);
-
-module.exports = app 
+module.exports = app;

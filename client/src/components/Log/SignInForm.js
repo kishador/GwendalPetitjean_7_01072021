@@ -13,8 +13,8 @@ const SignInForm = () => {
 
     axios({
       method: "post",
-      url: `${process.env.REACT_APP_API_URL}api/auth/login`,
-      withCredentials: true,
+      url: `${process.env.REACT_APP_API_URL}api/users/login`,
+      withCredentials: false,
       data: {
         email,
         password,
@@ -25,6 +25,7 @@ const SignInForm = () => {
           emailError.innerHTML = res.data.errors.email;
           passwordError.innerHTML = res.data.errors.password;
         } else {
+          console.log(res)
           localStorage.setItem('jwt', res.data.userToken )
           window.location = "/"
         }

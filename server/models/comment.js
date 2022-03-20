@@ -1,39 +1,41 @@
-const sequelize = require ('sequelize')
-const db = require ('../db/db.js')
-const {DataTypes} = sequelize
-const Comment = db.define('comment', {
-    id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true
-      },
-      userId: {
-          type: DataTypes.INTEGER,
-          allowNull: false
-      },
-      avatar: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      username: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      postId: {
-          type: DataTypes.INTEGER,
-          allowNull: false
-      },
-      content: {
-          type: DataTypes.STRING,
-          allowNull: false
-      }
-    }, {
-        timestamps: true,
-        modelName: 'comments',
-        sequelize
-    })
-    
-    Comment.sync()
-
-    module.exports = Comment
+'use strict';
+const {
+  Model
+} = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+  class Comment extends Model {
+    static associate(models) {
+      models.User.belongsToMany(models.Post, {
+        through: models.Comment,
+        foreignKey: 'userId',
+        otherKey: 'postId',
+      });
+  
+      models.Post.belongsToMany(models.User, {
+        through: models.Comment,
+        foreignKey: 'postId',
+        otherKey: 'userId',
+      });
+  
+      models.Comment.belongsTo(models.User, {
+        foreignKey: 'userId',
+        as: 'user',
+      });
+  
+      models.Comment.belongsTo(models.Post, {
+        foreignKey: 'postId',
+        as: 'post',
+      });
+    }
+  };
+  Comment.init({
+    postId: DataTypes.INTEGER,
+    userId: DataTypes.INTEGER,
+    commenterPseudo: DataTypes.STRING,
+    content: DataTypes.STRING
+  }, {
+    sequelize,
+    modelName: 'Comment',
+  });
+  return Comment;
+};

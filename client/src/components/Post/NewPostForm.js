@@ -46,7 +46,7 @@ const NewPostForm = () => {
         </div>
         <NavLink to="/profil">
           <div className="user-info">
-            <img src={userData.picture} alt="user-img"/>
+            <img src={userData.imageUrl} alt="user-img"/>
           </div>
         </NavLink>
         <div className="post-form">
@@ -60,7 +60,7 @@ const NewPostForm = () => {
         {message || postPicture ? (
           <li className="card-container">
             <div className="card-left">
-              <img src={userData.picture} alt="user-pic"/>
+              <img src={userData.imageUrl} alt="user-pic"/>
             </div>
             <div className="card-right">
               <div className="card-header">
@@ -79,8 +79,10 @@ const NewPostForm = () => {
         ) : null}
         <div className="footer-form">
           <div className="icon">
-            <img src=".img/icons/picture.svg" alt="img"/>
+            <>
+            <img src="./img/icons/picture.svg" alt="img"/>
             <input type="file" id="file-upload" name="file" accept=".jpg, .jpeg, .gif, .png" onChange={(e) => handlePicture(e)}/>
+            </>
           </div>
           <div className="btn-send">
             {message || postPicture ? (

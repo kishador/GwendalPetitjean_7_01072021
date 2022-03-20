@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { UidContext } from "../components/AppContext";
-
+import Thread from "../components/Thread"
 import Log from "../components/Log";
 import NewPostForm from "../components/Post/NewPostForm";
 
@@ -13,7 +13,7 @@ const Home = () => {
     <div className="home">
       <div className="main">
         <div className="home-header">
-     {uid ? <NewPostForm /> : <Log signin={true} signup={false} />}
+     {uid ?( <div><div><NewPostForm /></div> <div><Thread /></div></div>) : (<Log signin={true} signup={false} />)}
         </div>
         
       </div>

@@ -1,31 +1,28 @@
-const sequelize = require ('sequelize')
-const db = require ('../db/db.js')
-const {DataTypes} = sequelize
-const Post = db.define('post', {
-    id : {
-        type : DataTypes.INTEGER.UNSIGNED,
-        primaryKey : true,
-        autoIncrement : true,
-        allowNull : false
-    },
-    posterId : {
-        type : DataTypes.INTEGER,
-        allowNull : false
-    },
-    message: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },  
-      picture: {
-        type: DataTypes.STRING,
-        allowNull: true
-      }
-},{
-    timestamps: true,
-    modelName: 'posts',
-    sequelize
-  })
+'use strict';
+const { Model } = require('sequelize');
 
-  Post.sync()
+module.exports = (sequelize, DataTypes) => {
+	class Post extends Model {
+    static associate(models) {
+      models.Post.belongsTo(models.User, {
+        foreignKey: {
+          allowNull: false
+        },
+		onDelete: 'CASCADE'
+      });
 
-module.exports = Post
+      models.Post.hasMany(models.Comment,
+        { onDelete: 'CASCADE' });
+
+    }
+  };
+  Post.init({
+    userId: DataTypes.INTEGER,
+    message: DataTypes.TEXT,
+    pictureUrl: DataTypes.STRING
+  }, {
+    sequelize,
+    modelName: 'Post',
+  });
+  return Post;
+};
