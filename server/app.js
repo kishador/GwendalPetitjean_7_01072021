@@ -9,12 +9,8 @@ const requireAuth  = require('./middleware/requireAuth.js')
 const path = require('path');
 const cors = require('cors');
 
-if (process.env.NODE_ENV !== 'production') {
-	require('dotenv').config();
-}
-
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: `${process.env.CLIENT_URL}`,
   credentials: true,
   'allowedHeaders': ['sessionId', 'Content-Type', 'authorization'],
   'exposedHeaders': ['sessionId'],

@@ -36,6 +36,7 @@ nav {
     .logo {
       display: flex;
       align-items: center;
+      overflow: hidden;
       
       h3 {
         transform: translate(15px, 2px);
@@ -43,8 +44,8 @@ nav {
         font-family: $font-3;
       }
       img {
-        height: 200px;
-        width: 200px;
+        height: 35px;
+        width: 170px;
       }
     }
     

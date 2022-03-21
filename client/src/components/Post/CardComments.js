@@ -55,7 +55,11 @@ const CardComments = ({ post }) => {
                   <span>{timestampParser(comment.createdAt)}</span>
               </div>
               <p>{comment.content}</p>
+              {(userData.id === comment.userId || userData.isAdmin === true) && (
+              <div className="delete-container" >
               <DeleteComment id={comment.id} />
+              </div>
+              )}
             </div>
           </div>
         );

@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
         res.send("need token")
       }
     else{
-      jwt.verify(token, "jwtSecret", (err, decodedToken) =>{
+      jwt.verify(token, `${process.env.JWT_KEY}`, (err, decodedToken) =>{
         if(err) {
           res.json({message: "failed to auth" })
         }

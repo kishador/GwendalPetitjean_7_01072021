@@ -1,6 +1,7 @@
 
 const models  = require('../models');
 const Post = models.posts
+const Comment = models.comments
 const fs = require('fs');
 
 exports.createPost = async (req, res) => {
@@ -40,6 +41,14 @@ exports.deletePost = async (req, res) => {
 		const destroyedPost = await Post.destroy({
 			where: { id: req.params.id },
 		});
+		const destroyedComment = await Comment.findAll({
+			where: { postId: req.params.id },
+		});
+		if(destroyedComment){
+			Comment.destroy({
+				where: { postId: req.params.id },
+			});
+		}
 
 		if (!destroyedPost) {
 			throw new Error('Sorry,something gone wrong,please try again later');

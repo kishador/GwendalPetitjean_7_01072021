@@ -1,7 +1,10 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const models = require("../models");
+const post = require("../models/post");
 const User = models.users
+const Post = models.posts
+const Comment = models.comments
 const maxAge = 3 * 24 * 60 * 60 * 1000;
 
 exports.signup = async (req, res) =>{
@@ -19,7 +22,8 @@ exports.signup = async (req, res) =>{
 
         await User.create({
             ...req.body,
-            password: hashedPassword
+            password: hashedPassword,
+			isAdmin: false
         })
         res.status(201).send({ user: User.id })
         
@@ -39,8 +43,8 @@ exports.login = async (req, res, next) =>{
             if (isMatch) {              
 
            const id = user.id
-
-           const token = jwt.sign({id}, "jwtSecret",{
+console.log(id)
+           const token = jwt.sign({id}, `${process.env.JWT_KEY}`,{
                expiresIn: maxAge,
            })
                res.status(200).json({ user: user.id, userToken: token})
@@ -98,6 +102,20 @@ exports.deleteProfile = async (req, res) => {
 		const destroyedProfil = await User.destroy({
 			where: { id: req.params.id },
 		});
+
+		const destroyedPost = await Post.findAll({
+			where: { userId: req.params.id },
+		})
+		if(destroyedPost){ Post.destroy({
+			where: { userId: req.params.id },
+		})}
+		
+		const destroyedComment = await Comment.findAll({
+			where: { userId: req.params.id },
+		})
+		if(destroyedComment){ Comment.destroy({
+			where: { userId: req.params.id },
+		})}
 
 		if (!destroyedProfil) {
 			throw new Error('Sorry,something gone wrong,please try again later');

@@ -29,6 +29,7 @@ const UploadImg = () => {
       />
       <br/>
       <input type="submit" value="Envoyer" />
+      
     </form>
   );
 };

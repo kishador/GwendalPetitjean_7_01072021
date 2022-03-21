@@ -57,7 +57,7 @@ const Card = ({ post }) => {
               <img src={post.picture} alt="card-pic" className="card-pic" />
             )}
            
-            {userData.id === post.userId && (
+            {(userData.id === post.userId || userData.isAdmin === true) && (
               <div className="button-container">
                 <DeleteCard id={post.id} />
               </div>

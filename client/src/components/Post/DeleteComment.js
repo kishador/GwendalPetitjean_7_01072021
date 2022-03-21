@@ -8,6 +8,8 @@ const DeleteComment = (props) => {
   const deleteQuote = () => dispatch(deleteComment(props.id));
 
   return (
+    <div className="delete-comment">
+      <div className="btn">
     <div
       onClick={() => {
         if (window.confirm("Voulez-vous supprimer ce commentaire ?")) {
@@ -16,6 +18,8 @@ const DeleteComment = (props) => {
       }}
     >
       <img src="./img/icons/trash.svg" alt="trash" />
+    </div>
+    </div>
     </div>
   );
 };
