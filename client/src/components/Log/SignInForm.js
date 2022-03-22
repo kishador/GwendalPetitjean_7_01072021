@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-
 const SignInForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,17 +14,15 @@ const SignInForm = () => {
       method: "post",
       url: `${process.env.REACT_APP_API_URL}api/users/login`,
       withCredentials: false,
-      data: {
-        email,
-        password,
-      },
+      data: {email, password },
     })
       .then((res) => {
-        if (res.data.errors) {
-          emailError.innerHTML = res.data.errors.email;
-          passwordError.innerHTML = res.data.errors.password;
-        } else {
-          console.log(res)
+        if (res.data.emailError) {
+          emailError.innerHTML = res.data.emailError;
+        } 
+        else if (res.data.passwordError) {
+          passwordError.innerHTML = res.data.passwordError;
+        }  else {
           localStorage.setItem('jwt', res.data.userToken )
           window.location = "/"
         }

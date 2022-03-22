@@ -11,11 +11,15 @@ const UploadImg = () => {
 
 
 
-  const handlePicture = (e, form) => {
-    e.preventDefault();
-    const data = new FormData(form);
-    dispatch(uploadPicture(data, userData.id));
-  };
+  const handlePicture = (e) => {
+    e.preventDefault()
+    const fd = new FormData()
+    fd.append("myImage", file, file.name)
+    fd.append("name", userData.pseudo);
+    fd.append("userId", userData.id);
+    console.log(fd.getAll("myImage"))
+    dispatch(uploadPicture(fd, userData.id))   
+  }
 
   return (
     <form action="" onSubmit={handlePicture} className="upload-pic">

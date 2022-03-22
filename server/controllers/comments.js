@@ -3,18 +3,16 @@ const Comment = models.comments
 const fs = require("fs");
 
 exports.createComment = async (req, res) => {
-	try { console.log(req.body)
+	try { 
 		await Comment.create({ 
 			...req.body
 		 })
-
 	res.status(201).send({ message: 'Post has been created'})
 } catch (err) {
 	res.status(500).send(err)
-}
-}
-exports.getComments = async (req, res) => {
-	
+}}
+
+exports.getComments = async (req, res) => {	
 	try {
 		const posts = await Comment.findAll({order: [
 			['createdAt', 'DESC'],
@@ -27,11 +25,9 @@ exports.getComments = async (req, res) => {
 	}
 		catch (error) {
 			res.status(400).json({ error: error.message });
-	}
-	}
+	}}
 
 exports.deleteComment = async (req, res) => {
-	console.log(req.params.id)
 	try {
 		const comment = await Comment.findOne({
 			where: { id: req.params.id },

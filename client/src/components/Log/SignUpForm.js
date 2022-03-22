@@ -8,37 +8,32 @@ const SignUpForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
  
-
   const handleRegister = async (e) => {
-    e.preventDefault();
-  
+    e.preventDefault(); 
     const pseudoError = document.querySelector(".pseudo.error");
     const emailError = document.querySelector(".email.error");
-    const passwordError = document.querySelector(".password.error");
-
-    
+    const globalError = document.querySelector(".password.error");
 
       await axios({
         method: "post",
         url: `${process.env.REACT_APP_API_URL}api/users/signup`,
-        data: {
-          pseudo,
-          email,
-          password,
-        },
+        data: {pseudo, email, password,},
       })
         .then((res) => {
-          console.log(res);
-          if (res.data.errors) {
-            pseudoError.innerHTML = res.data.errors.pseudo;
-            emailError.innerHTML = res.data.errors.email;
-            passwordError.innerHTML = res.data.errors.password;
-          } else {
+          if (res.data.emailError) {
+            emailError.innerHTML = res.data.emailError;
+          } 
+          else if (res.data.pseudoError) {
+            pseudoError.innerHTML = res.data.pseudoError;
+          } 
+          else if (res.data.globalError) {
+            globalError.innerHTML = res.data.globalError;
+          } 
+          else {
             setFormSubmit(true);
           }
         })
-        .catch((err) => console.log(err));
-    
+        .catch((err) => console.log(err)); 
   };
 
   return (

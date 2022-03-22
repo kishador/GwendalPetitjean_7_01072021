@@ -1,5 +1,4 @@
 import axios from "axios";
-
 export const GET_USER = "GET_USER";
 export const UPLOAD_PICTURE = "UPLOAD_PICTURE";
 export const DELETE_USER = "DELETE_USER";
@@ -13,9 +12,7 @@ export const getUser = (uid) => {
       const res = await axios
         .get(`${process.env.REACT_APP_API_URL}api/users/${uid}`, {
           withCredentials: true,
-          headers: {
-            'Authorization':  token
-            }
+          headers: { 'Authorization':  token }
         });
       if (res.data.imageUrl === null) {
         res.data.imageUrl = "./img/profil/random-user.png"
@@ -27,14 +24,11 @@ export const getUser = (uid) => {
   };
 };
 
-export const uploadPicture = (formData, id) => {
-  console.log(formData)
+export const uploadPicture = (fd, id) => {
   return (dispatch) => {
-    return axios.put(`${process.env.REACT_APP_API_URL}api/user/:${id}`, {
-      withCredentials: true,
-      headers: {
-        'Authorization':  token
-        }}, formData)
+    return axios.post( `${process.env.REACT_APP_API_URL}api/users/picture/${id}`, fd, {
+        headers: { "Content-type": "multipart/form-data", 'authorization': token }
+        })
       .then((res) => {
         if (res.data.errors) {
           dispatch({ type: GET_USER_ERRORS, payload: res.data.errors });

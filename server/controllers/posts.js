@@ -5,7 +5,6 @@ const Comment = models.comments
 const fs = require('fs');
 
 exports.createPost = async (req, res) => {
-	console.log(req)
     try { 
 		await Post.create({ 
 			...req.body,
@@ -14,6 +13,7 @@ exports.createPost = async (req, res) => {
 } catch (err) {
 	res.status(500).send(err)
 }}
+
 exports.getPosts = async (req, res, next) => {
 	try {
     const posts = await Post.findAll({order: [
@@ -49,7 +49,6 @@ exports.deletePost = async (req, res) => {
 				where: { postId: req.params.id },
 			});
 		}
-
 		if (!destroyedPost) {
 			throw new Error('Sorry,something gone wrong,please try again later');
 		} else {

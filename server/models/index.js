@@ -1,17 +1,13 @@
 'use strict';
-
 const fs = require('fs');
 const path = require('path');
-
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt")
 require('dotenv').config();
-
 const db = {};
-
 
 let sequelize;
 if (config.use_env_variable) {
@@ -35,6 +31,7 @@ const privilegedUser = sequelize.query(
 `INSERT INTO Users (id,email,pseudo,password,isAdmin,createdAt,updatedAt)
 VALUES (DEFAULT,"","","${password("")}",true,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)`);
 */
+
 fs.readdirSync(__dirname)
 	.filter((file) => {
 		return (

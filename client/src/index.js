@@ -9,14 +9,11 @@ import thunk from "redux-thunk";
 import rootReducer from "./reducers";
 import { getUsers } from "./actions/users.actions";
 import { getComments } from "./actions/post.actions";
-// dev tools
-import { composeWithDevTools } from "redux-devtools-extension";
-import logger from 'redux-logger'
 import { getPosts } from "./actions/post.actions";
 
 const store = createStore(
   rootReducer,
-  composeWithDevTools(applyMiddleware(thunk, logger))
+  applyMiddleware(thunk)
 );
 
 store.dispatch(getComments());

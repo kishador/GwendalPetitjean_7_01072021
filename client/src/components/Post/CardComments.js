@@ -13,14 +13,11 @@ const CardComments = ({ post }) => {
 
   const handleComment = (e) => {
     e.preventDefault();
-
     if (text) {
       dispatch(addComment(post.id, userData.id, text, userData.pseudo))
         .then(() => dispatch(getComments()))
         .then(() => setText(''));
-    }
-
-  }
+    }}
 
   return (
     <div className="comments-container">

@@ -6,11 +6,9 @@ import CardComments from "./CardComments";
 
 const Card = ({ post }) => {
   const [isLoading, setIsLoading] = useState(true);
-
   const [showComments, setShowComments] = useState(false);
   const usersData = useSelector((state) => state.usersReducer);
   const userData = useSelector((state) => state.userReducer);
-
 
   useEffect(() => {
     !isEmpty(usersData[0]) && setIsLoading(false);
@@ -51,12 +49,10 @@ const Card = ({ post }) => {
               </div>
               <span>{timestampParser(post.createdAt)}</span>
             </div>
-            <p>{post.message}</p>
-           
+            <p>{post.message}</p>    
             {post.picture && (
               <img src={post.picture} alt="card-pic" className="card-pic" />
-            )}
-           
+            )}       
             {(userData.id === post.userId || userData.isAdmin === true) && (
               <div className="button-container">
                 <DeleteCard id={post.id} />

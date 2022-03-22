@@ -4,13 +4,9 @@ import UploadImg from "./UploadImg";
 import DeleteProfil from "./DeleteProfil";
 import { dateParser } from "../Utils";
 
-
 const UpdateProfil = () => {
-  
-  
-  const userData = useSelector((state) => state.userReducer);
- 
-  const error = useSelector((state) => state.errorReducer.userError);
+const userData = useSelector((state) => state.userReducer);
+const error = useSelector((state) => state.errorReducer.userError);
 
   return (
     <div className="profil-container">

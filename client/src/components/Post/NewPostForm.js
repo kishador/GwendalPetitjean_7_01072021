@@ -4,9 +4,7 @@ import { timestampParser } from "../Utils";
 import { NavLink } from "react-router-dom";
 import { addPost, getPosts } from "../../actions/post.actions";
 
-
 const NewPostForm = () => {
-
   const [message, setMessage] = useState("");
   const [postPicture, setPostPicture] = useState(null);
   const [file, setFile] = useState();
@@ -15,30 +13,24 @@ const NewPostForm = () => {
 
   const handlePicture = (e) => {
     setPostPicture(URL.createObjectURL(e.target.files[0]))
-    setFile(e.target.files[0])
-  
+    setFile(e.target.files[0]) 
   }
 
   const handlePost = async () => {
     if (message || postPicture) {
-
       await dispatch(addPost(userData.id, message, file))
       dispatch(getPosts())
       cancelPost()
-
-    } else {
+    } 
+    else {
       alert("Veuillez entrer un message")
-    }
-  }
+    }}
 
   const cancelPost = () => {
     setMessage('')
     setPostPicture('')
     setFile('')
   }
-
-
-
 
   return (
     <div className="post-container">
@@ -74,7 +66,6 @@ const NewPostForm = () => {
                 <img src={postPicture} alt=""/>
               </div>
             </div>
-
           </li>
         ) : null}
         <div className="footer-form">

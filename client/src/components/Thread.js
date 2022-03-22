@@ -13,8 +13,7 @@ const Thread = () => {
   const loadMore = () => {
     if (window.innerHeight + document.documentElement.scrollTop + 1 > document.scrollingElement.scrollHeight) {
       setLoadPost(true);
-    }
-  }
+    }}
 
   useEffect(() => {
     if (loadPost) {
@@ -23,10 +22,10 @@ const Thread = () => {
       setLoadPost(false);
       setCount(count + 5);
     }
-
     window.addEventListener('scroll', loadMore);
     return () => window.removeEventListener('scroll', loadMore);
-  }, [loadPost, dispatch, count]);
+  }, 
+  [loadPost, dispatch, count]);
 
   return (
     <div className="thread-container">

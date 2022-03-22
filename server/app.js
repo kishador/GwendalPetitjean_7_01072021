@@ -12,14 +12,14 @@ const cors = require('cors');
 const corsOptions = {
   origin: `${process.env.CLIENT_URL}`,
   credentials: true,
-  'allowedHeaders': ['sessionId', 'Content-Type', 'authorization'],
+  'allowedHeaders': ['sessionId', 'Content-Type', 'authorization', 'enctype'],
   'exposedHeaders': ['sessionId'],
   'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
   'preflightContinue': false
 }
+
 app.use(cors(corsOptions));
 app.get('/jwtid', requireAuth, (req, res) => {
-	console.log(res.data)
   });
 
 app.use(bodyParser.json());

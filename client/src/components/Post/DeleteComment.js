@@ -4,7 +4,6 @@ import { deleteComment } from "../../actions/post.actions";
 
 const DeleteComment = (props) => {
   const dispatch = useDispatch();
-
   const deleteQuote = () => dispatch(deleteComment(props.id));
 
   return (
