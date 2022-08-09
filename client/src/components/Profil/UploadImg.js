@@ -14,11 +14,11 @@ const UploadImg = () => {
   const handlePicture = (e) => {
     e.preventDefault()
     const fd = new FormData()
-    fd.append("myImage", file, file.name)
+    fd.append("image", file, file.name)
     fd.append("name", userData.pseudo);
     fd.append("userId", userData.id);
-    console.log(fd.getAll("myImage"))
-    dispatch(uploadPicture(fd, userData.id))   
+    dispatch(uploadPicture(fd, userData.id))
+    window.location.reload()   
   }
 
   return (
@@ -33,7 +33,6 @@ const UploadImg = () => {
       />
       <br/>
       <input type="submit" value="Envoyer" />
-      
     </form>
   );
 };

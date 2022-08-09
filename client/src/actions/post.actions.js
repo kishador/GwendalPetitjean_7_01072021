@@ -21,16 +21,11 @@ export const getPosts = () => {
   };
 };
 
-export const addPost = (id, message, file) => {
+export const addPost = (fd) => {
   return (dispatch) => {
-    return axios
-    ({
-      method: "post",
-      url: `${process.env.REACT_APP_API_URL}api/posts/new`,
-        withCredentials: true,
-        headers: { 'Authorization':  token },
-        data: { userId: id, message: message, file  },
-    })
+    return axios.post( `${process.env.REACT_APP_API_URL}api/posts/new`, fd, {
+      headers: { "Content-type": "multipart/form-data", 'authorization': token }
+      })
       .then((res) => {
         if (res.data.errors) {
           dispatch({ type: GET_POST_ERRORS, payload: res.data.errors });

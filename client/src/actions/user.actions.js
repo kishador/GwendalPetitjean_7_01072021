@@ -30,16 +30,14 @@ export const uploadPicture = (fd, id) => {
         headers: { "Content-type": "multipart/form-data", 'authorization': token }
         })
       .then((res) => {
-        if (res.data.errors) {
-          dispatch({ type: GET_USER_ERRORS, payload: res.data.errors });
-        } else {
-          dispatch({ type: GET_USER_ERRORS, payload: "" });
+        console.log(res)
           return axios
-            .get(`${process.env.REACT_APP_API_URL}api/user/${id}`)
+            .get(`${process.env.REACT_APP_API_URL}api/users/${id}`, {
+              headers: { 'authorization' : token }
+            })
             .then((res) => {
-              dispatch({ type: UPLOAD_PICTURE, payload: res.data.picture });
+              dispatch({ type: UPLOAD_PICTURE, payload: res.data.imageUrl });
             });
-        }
       })
       .catch((err) => console.log(err));
   };

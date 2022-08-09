@@ -116,25 +116,11 @@ exports.deleteProfile = async (req, res) => {
 
 exports.updateProfile = async (req, res) => {
 	try {
-		const userToFind = await User.findOne({
-			where: { id: req.params.id }
-		});
-		if (!userToFind) {
-			throw new Error("Sorry,we can't find your account");
-		}
-		const userToUpdate = await User.update({
-				where: { id: req.user.id }
+		const user = await User.update({imageUrl: `http://localhost:4200/${req.file.path}`},
+				{where: { id: `${req.params.id}` }
 			});
-		if (!userToUpdate) {
-			throw new Error("Sorry,something gone wrong,please try again later");
-		}
-		res.status(200).json({
-			user: userToUpdate.isAdmin,
-			message: "Your account has been update"
-		});
-		if (!userToUpdate) {
-			throw new Error("Sorry,we can't update your account");
-		}
+	
+		res.status(200).json({id: req.params.id});
 	} catch (error) {
 		res.status(400).json({ error: error.message });
 	}

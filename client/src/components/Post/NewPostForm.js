@@ -18,7 +18,11 @@ const NewPostForm = () => {
 
   const handlePost = async () => {
     if (message || postPicture) {
-      await dispatch(addPost(userData.id, message, file))
+      const fd = new FormData()
+      fd.append("image", file, file.name)
+      fd.append("userId", userData.id)
+      fd.append("message", message)
+      await dispatch(addPost(fd))
       dispatch(getPosts())
       cancelPost()
     } 

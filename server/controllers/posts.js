@@ -5,9 +5,11 @@ const Comment = models.comments
 const fs = require('fs');
 
 exports.createPost = async (req, res) => {
+	console.log(req)
     try { 
 		await Post.create({ 
 			...req.body,
+			pictureUrl: `http://localhost:4200/${req.file.path}`
 		 })
 	res.status(201).send({ message: 'Post has been created'})
 } catch (err) {

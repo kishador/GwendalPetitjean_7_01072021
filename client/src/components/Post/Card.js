@@ -50,8 +50,8 @@ const Card = ({ post }) => {
               <span>{timestampParser(post.createdAt)}</span>
             </div>
             <p>{post.message}</p>    
-            {post.picture && (
-              <img src={post.picture} alt="card-pic" className="card-pic" />
+            {post.pictureUrl && (
+              <img src={post.pictureUrl} alt="card-pic" className="card-pic" />
             )}       
             {(userData.id === post.userId || userData.isAdmin === true) && (
               <div className="button-container">
